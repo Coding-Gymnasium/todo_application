@@ -1,4 +1,7 @@
 Rails.application.routes.draw do
   root 'pages#home'
-  get 'pages/my_todo_items'
+  authenticated :user do
+    root 'pages#my_todo_items', as: :authenticated_root
+  end
+  devise_for :users
 end
