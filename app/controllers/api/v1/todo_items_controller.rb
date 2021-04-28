@@ -17,6 +17,18 @@ class Api::V1::TodoItemsController < ApplicationController
   end
 
   def create
+    @todo_item = current_user.todo_items.build(todo_item_params)
+    if authorized?
+      respond_to do |format|
+        if @todo_item.save
+          format.json { render :show, status: :created, location: api_v1_todo_item_path(@todo_item) }
+        else
+          format.json { render json: @todo_item.errors, status: :unprocessable_entity }
+        end
+      end
+    else
+      handle_unauthorized
+    end
   end
 
   def edit
@@ -29,6 +41,10 @@ class Api::V1::TodoItemsController < ApplicationController
   end
 
   private
+
+  def todo_items_params
+    params.require(:todo_item).permit(:title, :complete)
+  end
 
   def set_todo_item
     @todo_item = TodoItem.find(params[:id])
