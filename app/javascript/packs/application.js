@@ -8,7 +8,7 @@ import Turbolinks from "turbolinks";
 import * as ActiveStorage from "@rails/activestorage";
 import "channels";
 import 'bootstrap/dist/css/bootstrap';
-import './hello_react';
+import './components/TodoApp';
 
 Rails.start()
 Turbolinks.start()
