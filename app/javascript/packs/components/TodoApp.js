@@ -30,6 +30,7 @@ class TodoApp extends React.Component {
 
   getTodoItems() {
     axios.get('/api/v1/todo_items').then(response => {
+      this.clearErrors();
       this.setState({ isLoading: true });
       const todoItems = response.data;
       this.setState({ todoItems});
@@ -37,7 +38,11 @@ class TodoApp extends React.Component {
     })
       .catch(error => { 
         this.setState({ isLoading: true });
-        console.log(error); 
+        this.setState({
+          errorMessage: {
+            message: "There was an error loading your todo items..."
+          }
+        });
     });
   }
 
