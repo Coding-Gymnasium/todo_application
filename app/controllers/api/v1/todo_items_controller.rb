@@ -17,11 +17,11 @@ class Api::V1::TodoItemsController < ApplicationController
   end
 
   def create
-    @todo_item = current_user.todo_items.build(todo_item_params)
+    @todo_item = current_user.todo_items.build(todo_items_params)
     if authorized?
       respond_to do |format|
         if @todo_item.save
-          format.json { render :show, status: :created, location: api_v1_todo_item_path(@todo_item) }
+          format.json { render :show, status: :created, location: api_v1_todo_items_path(@todo_item) }
         else
           format.json { render json: @todo_item.errors, status: :unprocessable_entity }
         end
@@ -37,7 +37,7 @@ class Api::V1::TodoItemsController < ApplicationController
   def update
     if authorized?
       respond_to do |format|
-        if @todo_item.update(todo_item_params)
+        if @todo_item.update(todo_items_params)
           format.json { render :show, status: :ok, location: api_v1_todo_item_path(@todo_item) }
         else
           format.json { render json: @todo_item.errors, status: :unprocessable_entity }
